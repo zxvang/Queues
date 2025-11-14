@@ -41,6 +41,9 @@ Option 6 will tell us if the queue is empty or not. In this case it will not be 
 ### Move the Front Element to the Rear
 Option 7 let's us move the front of the queue to the back. Since "Adam" is currently in the front, using this fucntion will put him all the way to the end and "Frank" will be the new element in the front.
 
+<img width="346" height="53" alt="Screenshot 2025-11-14 114952" src="https://github.com/user-attachments/assets/906964de-a681-4a99-a53c-f73143a2d080" />
+
+
 ### Clear Queue
 Option 8 lets me clear the queue. Not part of the assignment but added for ease of testing.
 
