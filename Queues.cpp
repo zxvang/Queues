@@ -175,15 +175,13 @@ void insertion_sort(list<int>& num) {
     while (it != num.end()) {
         auto curr = it++;
         int key = *curr;
-        bool insertionNeeded = false;
         
         auto insert_pos = num.begin();
         while (insert_pos != curr && *insert_pos < key) {
             ++insert_pos;
-            insertionNeeded = true;
         }
         
-        if (insertionNeeded && insert_pos != curr)
+        if (insert_pos != curr)
             num.splice(insert_pos, num, curr);
     }
 }
