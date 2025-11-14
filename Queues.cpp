@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
+using namespace std;
 
 template <typename T>
 bool read_value_from_stdin(T& out) {
@@ -124,8 +125,8 @@ void run_queue_menu() {
     }
 }
 
-// Demo: iterative linear search for last occurrence (int vector)
-static void demo_last_occurrence_linear_int() {
+// Demo: recursive linear search for last occurrence (int vector)
+static void last_occurrence_linear_int() {
     cout << "Enter number of elements: ";
     int n;
     if (!(cin >> n) || n < 0) {
@@ -158,13 +159,37 @@ static void demo_last_occurrence_linear_int() {
         cout << "Invalid target.\n";
         return;
     }
-    int idx = last_occurrence_linear(v, target);
+    // Use the recursive implementation declared in Headers.h
+    int idx = linear_search(v, target, 0);
     if (idx == -1) cout << "Target not found.\n";
     else cout << "Last occurrence index: " << idx << '\n';
 }
 
+// Add insertion sort function here
+void insertion_sort(list<int>& num) {
+    if (num.empty())
+        return;
+    auto it = num.begin();
+    ++it;
+    
+    while (it != num.end()) {
+        auto curr = it++;
+        int key = *curr;
+        bool insertionNeeded = false;
+        
+        auto insert_pos = num.begin();
+        while (insert_pos != curr && *insert_pos < key) {
+            ++insert_pos;
+            insertionNeeded = true;
+        }
+        
+        if (insertionNeeded && insert_pos != curr)
+            num.splice(insert_pos, num, curr);
+    }
+}
+
 // Demo: in-place insertion sort for std::list<int>
-static void demo_insertion_sort_list() {
+static void insertion_sort_list() {
     cout << "Enter number of elements for list: ";
     int n;
     if (!(cin >> n) || n < 0) {
@@ -187,7 +212,7 @@ static void demo_insertion_sort_list() {
         }
         lst.push_back(x);
     }
-    insertionSortListInPlace(lst);
+    insertion_sort(lst);
     cout << "Sorted list: ";
     for (int v : lst) cout << v << ' ';
     cout << '\n';
@@ -196,7 +221,7 @@ static void demo_insertion_sort_list() {
 int main() {
     for (;;) {
         cout << "\nChoose queue data type:\n";
-        cout << "1) int\n2) double\n3) string\n4) char\n5) Demo: last_occurrence_linear (int vector)\n6) Demo: insertionSortListInPlace (int list)\n7) Quit\nSelection: ";
+        cout << "1) int\n2) double\n3) string\n4) char\n5) Demo: last_occurrence_recursive (int vector)\n6) Demo: insertionSortListInPlace (int list)\n7) Quit\nSelection: ";
         int sel;
         if (!(cin >> sel)) {
             cin.clear();
@@ -216,9 +241,9 @@ int main() {
         } else if (sel == 4) {
             run_queue_menu<char>();
         } else if (sel == 5) {
-            demo_last_occurrence_linear_int();
+            last_occurrence_linear_int();
         } else if (sel == 6) {
-            demo_insertion_sort_list();
+            insertion_sort_list();
         } else if (sel == 7) {
             cout << "Exiting.\n";
             break;

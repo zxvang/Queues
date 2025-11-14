@@ -118,50 +118,40 @@ void Queue<T>::move_to_rear() {
     pop();
 }
 
-// Q2: Recursive search — return index of last occurrence of target (or -1)
+// Q2: Recursive linear search — return index of last occurrence of target (or -1)
 template <typename T>
-int last_occurrence_recursive(const std::vector<T>& v, const T& target, size_t idx = 0) {
-    if (idx >= v.size()) return -1;
-    int found_in_rest = last_occurrence_recursive(v, target, idx + 1);
-    if (found_in_rest != -1) return found_in_rest;
-    return (v[idx] == target) ? static_cast<int>(idx) : -1;
+int linear_search(const vector<T>& items, const T& target, size_t pos_first) {
+    if (pos_first >= items.size())
+        return -1;
+    int found_in_rest = linear_search(items, target, pos_first + 1);
+    if (found_in_rest != -1)
+        return found_in_rest;
+    if (target == items[pos_first])
+        return static_cast<int>(pos_first);
+    else
+        return -1;
 }
 
-// Q3: Insertion sort for std::list<int> (linked list version)
-inline void insertionSortList(std::list<int>& lst) {
-    if (lst.empty()) return;
-    std::list<int> sorted;
-    for (int value : lst) {
-        auto it = sorted.begin();
-        while (it != sorted.end() && *it < value) ++it;
-        sorted.insert(it, value);
-    }
-    lst.swap(sorted);
-}
-
-// In-place insertion sort for std::list<int> using splice (stable, no extra list)
-inline void insertionSortListInPlace(std::list<int>& lst) {
-    if (lst.empty()) return;
-    auto it = lst.begin();
+// Q3: Insertion sort for linked list
+void insertion_sort(list<int>& num) {
+    if (num.empty())
+        return;
+    auto it = num.begin();
     ++it; // start from second element
-    while (it != lst.end()) {
+    
+    while (it != num.end()) {
         auto curr = it++;
-        // find insertion position: after any elements <= *curr to preserve stability
-        auto insert_pos = lst.begin();
-        while (insert_pos != curr && *insert_pos <= *curr) ++insert_pos;
-        if (insert_pos != curr) {
-            lst.splice(insert_pos, lst, curr); // move current before insert_pos
+        int key = *curr;
+        bool insertionNeeded = false;
+        
+        auto insert_pos = num.begin();
+        while (insert_pos != curr && *insert_pos < key) {
+            ++insert_pos;
+            insertionNeeded = true;
         }
+        
+        if (insertionNeeded && insert_pos != curr)
+            num.splice(insert_pos, num, curr);
     }
 }
-// Iterative linear search for last occurrence (safer than the recursive version)
-template <typename T>
-int last_occurrence_linear(const std::vector<T>& v, const T& target) {
-    if (v.empty()) return -1;
-    // use signed type for indexing from end
-    long long n = static_cast<long long>(v.size());
-    for (long long i = n - 1; i >= 0; --i) {
-        if (v[static_cast<size_t>(i)] == target) return static_cast<int>(i);
-    }
-    return -1;
-}
+
