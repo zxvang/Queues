@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Template circular-array queue (header-only)
+// Template circular-array queue
 template <typename T>
 class Queue {
 public:
@@ -112,13 +112,12 @@ void Queue<T>::move_to_rear() {
     if (empty()) {
         throw underflow_error("Queue::move_to_rear() called on empty queue");
     }
-    // Use only push, front, pop as required
     T tmp = front();
     push(tmp);
     pop();
 }
 
-// Q2: Recursive linear search — return index of last occurrence of target (or -1)
+// Recursive linear search — return index of last occurrence of target (or -1)
 template <typename T>
 int linear_search(const vector<T>& items, const T& target, size_t pos_first) {
     if (pos_first >= items.size())
@@ -131,27 +130,3 @@ int linear_search(const vector<T>& items, const T& target, size_t pos_first) {
     else
         return -1;
 }
-
-// Q3: Insertion sort for linked list
-void insertion_sort(list<int>& num) {
-    if (num.empty())
-        return;
-    auto it = num.begin();
-    ++it; // start from second element
-    
-    while (it != num.end()) {
-        auto curr = it++;
-        int key = *curr;
-        bool insertionNeeded = false;
-        
-        auto insert_pos = num.begin();
-        while (insert_pos != curr && *insert_pos < key) {
-            ++insert_pos;
-            insertionNeeded = true;
-        }
-        
-        if (insertionNeeded && insert_pos != curr)
-            num.splice(insert_pos, num, curr);
-    }
-}
-

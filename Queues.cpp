@@ -1,4 +1,4 @@
-// Queues.cpp : Interactive menu for Queue<T> (choose type, then operate)
+// Queues.cpp
 #include "Headers.h"
 #include <iostream>
 #include <string>
@@ -165,7 +165,7 @@ static void last_occurrence_linear_int() {
     else cout << "Last occurrence index: " << idx << '\n';
 }
 
-// Add insertion sort function here
+//insertion sort function
 void insertion_sort(list<int>& num) {
     if (num.empty())
         return;
@@ -188,7 +188,7 @@ void insertion_sort(list<int>& num) {
     }
 }
 
-// Demo: in-place insertion sort for std::list<int>
+// in-place insertion sort for list of integers
 static void insertion_sort_list() {
     cout << "Enter number of elements for list: ";
     int n;
@@ -220,8 +220,8 @@ static void insertion_sort_list() {
 
 int main() {
     for (;;) {
-        cout << "\nChoose queue data type:\n";
-        cout << "1) int\n2) double\n3) string\n4) char\n5) Demo: last_occurrence_recursive (int vector)\n6) Demo: insertionSortListInPlace (int list)\n7) Quit\nSelection: ";
+        cout << "\nChoose Queue Data Type:\n";
+        cout << "1) Integer\n2) Double\n3) String\n4) Character\n5) Last Occurrence (Recursive, int vector)\n6) Insertion Sort (int list)\n7) Quit\nSelection: ";
         int sel;
         if (!(cin >> sel)) {
             cin.clear();
@@ -236,7 +236,6 @@ int main() {
         } else if (sel == 2) {
             run_queue_menu<double>();
         } else if (sel == 3) {
-            // consume newline and run string menu
             run_queue_menu<string>();
         } else if (sel == 4) {
             run_queue_menu<char>();
